@@ -1,3 +1,13 @@
 .root {
 
 }
+
+.calendar {
+  & div:first-child {
+    & div:first-child {
+      & div:first-child {
+          text-transform: capitalize;
+      }
+    }
+  }
+}

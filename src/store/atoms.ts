@@ -22,6 +22,12 @@ export const calendarAtom = atom<boolean>({
     default: true,
 });
 
+
+export const reportModalAtom = atom<boolean>({
+    key: 'reportModalAtom',
+    default: false,
+});
+
 export const rangeAtom = atom<{from: Dayjs, to: Dayjs}>({
     key: 'rangeAtom',
     default: {from: dayjs(), to: dayjs()},

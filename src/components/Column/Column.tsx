@@ -12,11 +12,13 @@ const Column = () => {
     const [ visible, setVisible ] = useRecoilState(calendarAtom);
     const [ selectedDate, setSelectedDate ] = useRecoilState(currentDateAtom);
     const view = useRecoilValue(viewAtom);
+
     return <AnimatePresence>
         {
             visible && <motion.div key={String(visible)} className={styles.root}>
                 <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
                     <DateCalendar
+                        className={styles.calendar}
                         sx={{transform: 'scale(0.9)', width: '270px'}}
                         value={selectedDate}
                         onChange={(newValue) => {

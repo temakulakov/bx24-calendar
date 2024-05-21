@@ -1,6 +1,6 @@
 import styles from './Header.module.scss';
 import {useRecoilState} from "recoil";
-import {calendarAtom, currentDateAtom, viewAtom} from "../../../store/atoms";
+import {calendarAtom, currentDateAtom, reportModalAtom, viewAtom} from "../../../store/atoms";
 import {Button, Menu, MenuItem} from "@mui/material";
 import React, {useState} from "react";
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
@@ -14,7 +14,8 @@ const Header = () => {
     const [ currentDate, setCurrentDate ] = useRecoilState(currentDateAtom);
     const [ calendar, setCalendar ] = useRecoilState(calendarAtom);
 
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [ anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [ reportModal, setReportModal ] = useRecoilState(reportModalAtom);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -97,6 +98,10 @@ const Header = () => {
 
 
         <div className={styles.row}>
+            <Button
+                className={styles.btnMenu}
+                onClick={() => setReportModal(true)}
+            >{'Отчеты'}</Button>
             <Button className={styles.btnMenu} onClick={() => setCurrentDate(dayjs())}>
                 {'Сегодня'}
             </Button>

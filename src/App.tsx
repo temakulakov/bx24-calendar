@@ -6,6 +6,7 @@ import Content from "./components/Content/Content";
 import Header from "./components/Content/Header/Header";
 import {useRecoilValue} from "recoil";
 import {calendarAtom} from "./store/atoms";
+import ReportModal from "./components/Modals/ReportModal/ReportModal";
 
 function App() {
     const calendar = useRecoilValue(calendarAtom)
@@ -18,6 +19,7 @@ function App() {
                     calendar && <Column/>
                 }
             </div>
+            <ReportModal/>
         </div>
     );
 };
