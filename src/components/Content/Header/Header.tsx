@@ -1,13 +1,15 @@
 import styles from './Header.module.scss';
 import {useRecoilState} from "recoil";
 import {calendarAtom, currentDateAtom, reportModalAtom, viewAtom} from "../../../store/atoms";
-import {Button, Menu, MenuItem} from "@mui/material";
+import PieChartIcon from '@rsuite/icons/PieChart';
 import React, {useState} from "react";
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
-import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
+import MenuIcon from '@rsuite/icons/Menu';
 import {Months, MonthsOf} from "../../../consts/date";
+import AddOutlineIcon from '@rsuite/icons/AddOutline';
+import PagePreviousIcon from '@rsuite/icons/PagePrevious';
 import dayjs from "dayjs";
+import {Button, ButtonGroup, ButtonToolbar, Dropdown, Heading, IconButton} from "rsuite";
 
 const Header = () => {
     const [ view, setView ] = useRecoilState(viewAtom);
@@ -65,55 +67,38 @@ const Header = () => {
 
     return <div className={styles.root}>
         <div className={styles.row}>
-            <div className={styles.title}>
+            <Heading level={3}>
                 {
                     currentDateTitle()
                 }
-            </div>
-            <Button
-                endIcon={<ArrowDropDownOutlinedIcon/>}
-                className={styles.btnMenu}
-                onClick={handleClick}
-            >{viewTextButton()}
-            </Button>
-            <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-            >
-                <MenuItem onClick={() => {
-                    setView('month')
-                    handleClose()
-                }}>{'M - Месяц'}</MenuItem>
-                <MenuItem onClick={() => {
-                    setView('week')
-                    handleClose()
-                }}>{'W - Неделя'}</MenuItem>
-                <MenuItem onClick={() => {
-                    setView('day')
-                    handleClose()
-                }}>{'D - День'}</MenuItem>
-            </Menu>
+            </Heading>
+            <Dropdown title={viewTextButton()}>
+                <Dropdown.Item shortcut="M" onClick={() => setView('month')}>{'Месяц'}</Dropdown.Item>
+                <Dropdown.Item shortcut="W" onClick={() => setView('week')}>{'Неделя'}</Dropdown.Item>
+                <Dropdown.Item shortcut="D" onClick={() => setView('day')}>{'День'}</Dropdown.Item>
+            </Dropdown>
         </div>
 
 
         <div className={styles.row}>
-            <Button
-                className={styles.btnMenu}
-                onClick={() => setReportModal(true)}
-            >{'Отчеты'}</Button>
-            <Button className={styles.btnMenu} onClick={() => setCurrentDate(dayjs())}>
-                {'Сегодня'}
-            </Button>
-            <Button
-                onClick={() => changeTime(false)}>
-                <ArrowBackIosNewOutlinedIcon/>
-            </Button>
-            <Button
-                onClick={() => changeTime(true)}>
-                <ArrowBackIosNewOutlinedIcon sx={{transform: 'rotate(180deg)', height: '70%'}}/>
-            </Button>
-            <Button onClick={() => setCalendar(prev => !prev)}><MenuOutlinedIcon/></Button>
+            <IconButton icon={<PieChartIcon />} onClick={() => setReportModal(true)}>Отчеты</IconButton>
+
+                <ButtonToolbar>
+                    <ButtonGroup>
+                        <IconButton
+                            onClick={() => changeTime(false)}
+                            icon={<PagePreviousIcon/>}
+                        />
+                        <Button
+                            onClick={() => setCurrentDate(dayjs())}
+                        >Сегодня</Button>
+                        <IconButton
+                            onClick={() => changeTime(true)}
+                            icon={<PagePreviousIcon style={{ transform: 'rotate(180deg)'}}/>}
+                        />
+                    </ButtonGroup>
+                </ButtonToolbar>
+                <IconButton appearance="link" onClick={() => setCalendar(prev => !prev)} icon={<MenuIcon />} />
         </div>
 
     </div>

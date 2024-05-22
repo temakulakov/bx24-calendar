@@ -43,12 +43,12 @@ export interface GoogleUrl {
 }
 
 export interface DateRange {
-    dateFrom: string;
-    dateTo: string;
+    dateFrom: Dayjs;
+    dateTo: Dayjs;
 }
 
 export interface DateFrom {
-    dateFrom: string;
+    dateFrom: Dayjs;
 }
 
 export interface Holiday {

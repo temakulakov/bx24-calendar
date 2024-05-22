@@ -1,44 +1,32 @@
-import { useRecoilState } from "recoil";
-import { reportModalAtom } from "../../../store/atoms";
-import {Modal, Box, Button} from "@mui/material";
-import { AnimatePresence, motion } from "framer-motion";
 import styles from './ReportModal.module.scss';
-import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
+import { Modal, ButtonToolbar, Button, Placeholder } from 'rsuite';
+import {useRecoilState} from "recoil";
+import {reportModalAtom} from "../../../store/atoms";
+
 
 const ReportModal = () => {
-    const [view, setView] = useRecoilState(reportModalAtom);
+    const [ view, setView ] = useRecoilState(reportModalAtom);
 
-    const handleClose = () => setView(false);
+    const handleClose = () => {
+        setView(false);
+    };
 
-    return (
-        <AnimatePresence>
-            {view && (
-                <Modal
-                    open={view}
-                    onClose={handleClose}
-                    aria-labelledby="modal-title"
-                    aria-describedby="modal-description"
-                >
-                    <motion.div
-                        className={styles.root}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                    >
-                        <Box className={styles.content}>
-                            <div className={styles.cellFixed}>
-                                <Button sx={{ borderRadius: '50%', width: '44.8px', height: 'auto'}}
-                                onClick={handleClose}>
-                                    <ClearRoundedIcon style={{ width: '70%', height: 'auto'}}/>
-                                </Button>
-                            </div>
-                            <div className={styles.cellFixed}></div>
-                        </Box>
-                    </motion.div>
-                </Modal>
-            )}
-        </AnimatePresence>
-    );
+    return <Modal size={'full'} open={view} onClose={handleClose}>
+        <Modal.Header>
+            <Modal.Title>Modal Title</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <Placeholder.Paragraph rows={100} />
+        </Modal.Body>
+        <Modal.Footer>
+            <Button onClick={handleClose} appearance="subtle">
+                Cancel
+            </Button>
+            <Button onClick={handleClose} appearance="primary">
+                Ok
+            </Button>
+        </Modal.Footer>
+    </Modal>
 };
 
 export default ReportModal;
