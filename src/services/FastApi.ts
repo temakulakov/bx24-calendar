@@ -28,8 +28,8 @@ export const getReportDay = async (dateFrom: DateFrom): Promise<ReportRoom[]> =>
 
 export const getReportRange = async ({ dateFrom, dateTo}: DateRange): Promise<ReportRoom[]> => {
     const response = await api.post<{ data: ReportRoom[] }>('/report/range', {
-        dateFrom: dateFrom,
-        dateTo: dateTo,
+        dateFrom: dateFrom.startOf('day'),
+        dateTo: dateTo.endOf('day'),
     });
     return response.data.data;
 };

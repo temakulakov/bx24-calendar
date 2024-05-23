@@ -5,6 +5,8 @@
   --rs-calendar-today-bg: #9D2135;
   --rs-input-focus-border: #9D2135;
 
+  --rs-bg-active: #9D2135;
+
 
   --rs-primary: #f50202; /* Пример цвета для основных элементов */
   --rs-primary-hover: #0056b3; /* Пример цвета для элементов при наведении */
@@ -16,13 +18,13 @@
   --rs-primary-50: #f2faff;
   --rs-primary-100: #cce9ff;
   --rs-primary-200: #a6d7ff;
-  --rs-primary-300: #80c4ff;
-  --rs-primary-400: #59afff;
-  --rs-primary-500: #3498ff;
-  --rs-primary-600: #2589f5;
-  --rs-primary-700: #1675e0;
-  --rs-primary-800: #0a5dc2;
-  --rs-primary-900: #004299;
+  --rs-primary-300: #c06b79;
+  --rs-primary-400: #af4b58;
+  --rs-primary-500: #9a4351;
+  --rs-primary-600: #af3045;
+  --rs-primary-700: #9D2135;
+  --rs-primary-800: #9D2135;
+  --rs-primary-900: #7e1c2c;
 
   // Spectrum
   --rs-color-red: #f44336;
@@ -32,6 +34,7 @@
   --rs-color-cyan: #00bcd4;
   --rs-color-blue: #2196f3;
   --rs-color-violet: #673ab7;
+
 
   // Button
 
@@ -61,4 +64,6 @@
   --rs-btn-link-text: var(--rs-primary-700);
   --rs-btn-link-hover-text: var(--rs-primary-800);
   --rs-btn-link-active-text: var(--rs-primary-900);
+
+  --rs-state-hover-bg: rgba(157, 33, 53, 0.07);
 }
