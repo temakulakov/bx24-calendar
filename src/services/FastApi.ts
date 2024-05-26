@@ -1,10 +1,20 @@
 import axios from 'axios';
 import {Room, GoogleUrl, DateRange, DateFrom, Holiday, ReportRoom, IEvent, Build} from '../types/type';
+import dayjs from "dayjs";
 
 const api = axios.create({
     baseURL: 'http://185.247.18.121:8000/calendar/',
     // baseURL: 'http://0.0.0.0:8000/calendar/',
 });
+
+
+const transformEventDates = (events: IEvent[]): IEvent[] => {
+    return events.map(event => ({
+        ...event,
+        dateFrom: dayjs(event.dateFrom),
+        dateTo: dayjs(event.dateTo)
+    }));
+};
 
 export const getRooms = async (): Promise<Room[]> => {
     const response = await api.post<{ data: Room[] }>('/rooms');
@@ -13,7 +23,7 @@ export const getRooms = async (): Promise<Room[]> => {
 
 export const getEvents = async (dateRange: DateRange): Promise<IEvent[]> => {
     const response = await api.post<{ data: IEvent[]}>('/events', dateRange);
-    return response.data.data;
+    return transformEventDates(response.data.data)  ;
 };
 
 export const getGoogleCalendar = async (googleUrl: GoogleUrl = { googleUrl: 'https://calendar.google.com/calendar/ical/ru.russian%23holiday%40group.v.calendar.google.com/public/basic.ics' }): Promise<Holiday[]> => {

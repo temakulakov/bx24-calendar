@@ -28,3 +28,14 @@
   display: flex;
   flex-direction: column;
 }
+
+.checkbox-custom {
+  input[type='checkbox']:checked + span {
+    background-color: var(--checkbox-color);
+    border-color: var(--checkbox-color);
+  }
+  input[type='checkbox']:checked + span::after {
+    border-color: #fff;
+  }
+}
+

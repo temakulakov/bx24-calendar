@@ -48,29 +48,6 @@ const root = ReactDOM.createRoot(
 
 const queryClient = new QueryClient();
 
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: '#9D2135', // Основной цвет для вашей темы
-        },
-        text: {
-            primary: '#000', // Основной цвет текста
-        },
-    },
-    components: {
-        MuiButton: {
-            styleOverrides: {
-                root: {
-                    borderColor: '#DADCE0', // Цвет границы для кнопок
-                    color: 'black', // Цвет текста кнопок
-                    '&:hover': {
-                        backgroundColor: 'rgba(157, 33, 53, 0.04)', // Немного светлее основного цвета при наведении
-                    },
-                },
-            },
-        },
-    },
-});
 
 
 root.render(

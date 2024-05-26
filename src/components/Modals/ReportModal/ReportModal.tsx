@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { getBuilds, getReportRange } from "../../../services/FastApi";
 import { Build, ReportRoom } from "../../../types/type";
 import dayjs, { Dayjs } from "dayjs";
-
 
 import styles from './ReportModal.module.scss';
 import { motion } from 'framer-motion';
@@ -17,7 +15,7 @@ import {
     IconButton,
     InlineEdit,
     TagPicker,
-    DateRangePicker
+    DateRangePicker, Button
 } from 'rsuite';
 import { useRecoilState } from 'recoil';
 import { reportModalAtom } from '../../../store/atoms';
@@ -25,7 +23,8 @@ import PieChartIcon from '@rsuite/icons/PieChart';
 import TimeRoundIcon from '@rsuite/icons/TimeRound';
 import FunnelIcon from '@rsuite/icons/Funnel';
 import PagePreviousIcon from '@rsuite/icons/PagePrevious';
-import {FaCalendar} from "react-icons/fa";
+import { FaCalendar } from "react-icons/fa";
+import HorizontalBarChart from "./HorizontalBarChart/HorizontalBarChart";
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -64,31 +63,14 @@ const ReportModal = () => {
         setStep(1);
     };
 
-    // Prepare data for Chart.js
-    const prepareChartData = () => {
-        if (!reportRooms || !builds) return { labels: [], datasets: [] };
-
-        const buildMap = builds.reduce((acc: { [key: number]: string }, build: Build) => {
-            acc[build.id] = build.title;
+    const groupRoomsByBuild = (rooms: ReportRoom[], builds: Build[]) => {
+        return builds.reduce((acc: { [key: string]: ReportRoom[] }, build) => {
+            acc[build.title] = rooms.filter(room => room.section === build.id);
             return acc;
         }, {});
-
-        const labels = builds.map(build => build.title);
-        const datasets = builds.map(build => {
-            const rooms = reportRooms.filter(room => room.section === build.id);
-            return {
-                label: build.title,
-                data: rooms.map(room => room.percents),
-                backgroundColor: rooms.map(room => room.color),
-                barThickness: 20,
-            };
-        });
-
-        return {
-            labels,
-            datasets,
-        };
     };
+
+    const groupedRooms = reportRooms && builds ? groupRoomsByBuild(reportRooms, builds) : {};
 
     return (
         <Modal size={'full'} open={view} onClose={handleClose}>
@@ -126,45 +108,11 @@ const ReportModal = () => {
                             showMeridian
                             isoWeek />
                     </>}
-                    {step === 3 && <>
-                        {(reportRooms && !isLoadingReportRooms) ? (
-                            <Bar
-                                data={prepareChartData()}
-                                options={{
-                                    indexAxis: 'y',
-                                    scales: {
-                                        x: {
-                                            beginAtZero: true,
-                                            title: {
-                                                display: true,
-                                                text: 'Percents',
-                                            },
-                                        },
-                                        y: {
-                                            title: {
-                                                display: true,
-                                                text: 'Buildings',
-                                            },
-                                            stacked: true,
-                                        },
-                                    },
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'Отчет по комнатам и зданиям',
-                                        },
-                                    },
-                                }}
-                            />
-                        ) : <Placeholder.Paragraph rows={100} />}
-                    </>}
-                    <ButtonToolbar>
-                        <IconButton disabled={step === 1} onClick={onPrevious} startIcon={<PagePreviousIcon />}>{'Назад'}</IconButton>
-                        <IconButton disabled={step === 3} onClick={onNext} endIcon={<PagePreviousIcon style={{ transform: 'rotate(180deg)' }} />}>{'Далее'}</IconButton>
+                    {step === 3 && reportRooms && <HorizontalBarChart groupedRooms={groupedRooms} />}
+
+                    <ButtonToolbar >
+                        <Button disabled={step === 1} onClick={onPrevious} startIcon={<PagePreviousIcon />}>{'Назад'}</Button>
+                        <Button disabled={step === 3} onClick={onNext} endIcon={<PagePreviousIcon style={{ transform: 'rotate(180deg)' }} />}>{'Далее'}</Button>
                     </ButtonToolbar>
                 </div>
             </Modal.Body>

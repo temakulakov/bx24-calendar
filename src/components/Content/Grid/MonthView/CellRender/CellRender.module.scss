@@ -1,0 +1,74 @@
+.root {
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.number {
+  height: 25px;
+  width: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color .3s ease-in;
+
+  &:hover {
+    background-color: #d5d5d5;
+  }
+}
+
+.current {
+  background-color: #1876D2;
+  background-color: #9D2135;
+  &:hover {
+    background-color: #13589b;
+    background-color: #721826;
+
+  }
+  color: white;
+}
+
+.monthStart {
+  width: fit-content;
+  padding-right: 3px;
+  padding-left: 3px;
+}
+
+.containerEvents {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  margin-top: 5px;
+  gap: 3px;
+
+}
+
+.event {
+  white-space: nowrap;
+  min-height: 22px;
+
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: white;
+  border-radius: 5px;
+  text-align: start;
+  padding: 0 8px;
+  overflow: hidden;
+}
+
+.cell {
+  border-bottom: 1px #DADCE0 solid;
+  border-right: 1px #DADCE0 solid;
+  height: calc(100% / 5);
+  width: calc((100% / 7) - 1px);
+}
+
+.unCurrent {
+  color: #70757a;
+}
